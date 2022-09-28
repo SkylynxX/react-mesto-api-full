@@ -3,6 +3,11 @@
   
 Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
 
-IP 51.250.0.54
-Frontend https://Mesto.SkylynxX.nomoredomains.icu
-Backend https://Mesto-api.SkylynxX.nomoredomains.icu
+
+- IP 51.250.0.54
+
+
+- Frontend https://Mesto.SkylynxX.nomoredomains.icu
+
+
+- Backend https://Mesto-api.SkylynxX.nomoredomains.icu
