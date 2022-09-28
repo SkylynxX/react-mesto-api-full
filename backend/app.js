@@ -7,6 +7,7 @@ const { errors } = require('celebrate');
 const routerUsers = require('./routes/users');
 const routerCards = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
+const cors = require('./middlewares/cors');
 const { validateUser, validateLogin } = require('./middlewares/validation');
 const auth = require('./middlewares/auth');
 const errorJSON = require('./middlewares/error-json');
@@ -20,6 +21,7 @@ app.use(helmet());
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
+app.use(cors);
 
 app.use(cookieParser());
 app.use(bodyParser.json()); // подключение готового парсера для обработки запросов
