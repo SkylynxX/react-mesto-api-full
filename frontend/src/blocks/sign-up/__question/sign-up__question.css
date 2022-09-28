@@ -1,0 +1,17 @@
+.sign-up__question {
+    margin: 15px 0 0 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: opacity 1s;
+  text-decoration:none;
+}
+
+.sign-up__question:hover {
+    opacity: 60%;
+  }

@@ -1,0 +1,19 @@
+.sign-up__title {
+font-family: 'Inter';
+font-style: normal;
+font-weight: 900;
+font-size: 24px;
+line-height: 29px;
+text-align: center;
+color: #FFFFFF;
+margin: 0 0 50px 0;
+}
+
+@media screen and (max-width: 400px) {
+  .sign-up__title {
+    font-size: 20px;
+    line-height: 24px;
+    }
+  }
+
+

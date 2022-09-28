@@ -1,0 +1,22 @@
+.profile__title-box {
+  display: flex;
+  align-items: center;
+  margin: 22px 0 0 30px;
+}
+
+@media screen and (max-width: 895px) {
+  .profile__title-box {
+   max-width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .profile__title-box {
+    margin-top: 22px;
+    font-size: 14px;
+    line-height: 17px;
+    max-width: 282px;
+  }
+}

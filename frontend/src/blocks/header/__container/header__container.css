@@ -1,0 +1,10 @@
+.header__container {
+    display: flex;
+    padding-top: 6px;
+}
+
+@media screen and (max-width: 400px) {
+    .header__container {
+      margin-right: 30px;
+    }
+  }

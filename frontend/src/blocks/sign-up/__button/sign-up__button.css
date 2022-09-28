@@ -1,0 +1,33 @@
+.sign-up__button {
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 0;
+    border: none;
+    width: 358px;
+    height: 50px;
+    background: #FFFFFF;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+  transition: opacity 1s;
+}
+
+.sign-up__button:hover {
+    opacity: 80%;
+  }
+
+
+@media screen and (max-width: 400px) {
+  .sign-up__button {
+    width: 260px;
+    height: 46px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
