@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../index.css";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { useHistory, Switch, Route, Redirect } from "react-router-dom";
