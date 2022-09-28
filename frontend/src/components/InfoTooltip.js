@@ -1,3 +1,4 @@
+import React from 'react';
 import yes_pic from "../images/yes.svg";
 import no_pic from "../images/no.svg";
 export function InfoTooltip(props) {
