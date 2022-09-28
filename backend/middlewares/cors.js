@@ -1,9 +1,9 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
   'https://Mesto.SkylynxX.nomoredomains.icu',
-  'https://www.Mesto.SkylynxX.nomoredomains.icu',
+  'https://Mesto-api.SkylynxX.nomoredomains.icu',
   'http://Mesto.SkylynxX.nomoredomains.icu',
-  'http://www.Mesto.SkylynxX.nomoredomains.icu',
+  'http://Mesto-api.SkylynxX.nomoredomains.icu',
   'localhost:3000',
   'http://localhost:3000',
   'https://localhost:3000',
