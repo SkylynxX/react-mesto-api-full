@@ -3,6 +3,7 @@ export class Auth {
     this._baseUrl = inObj.baseUrl;
     this._headers = inObj.headers;
   }
+
   //Общая обработка результата запроса: ok - возвращаем сериализованный ответ, not ok - возвращаем промис со статусом  (аргумент - объект Response возвращемый промисом fetch)
   _returnStatus(res) {
     if (res.ok) {

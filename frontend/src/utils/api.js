@@ -11,18 +11,27 @@ export class Api {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
   }
+  
+  //Добаивть валидацию токена для работы модуля авторизации в node.js
+  _validateHeader() {
+    const jwt = localStorage.getItem('jwt');
+    return {
+      'Authorization': `Bearer ${jwt}`,
+      ...this._headers,
+    };
+  }
 
   // Получить данные начальные о всех картах
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: this._validateHeader(),
     }).then(this._returnStatus);
   }
 
   // Получить информацию о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: this._validateHeader(),
     }).then(this._returnStatus);
   }
 
@@ -30,7 +39,7 @@ export class Api {
   setUserInfo(userInfoData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this._validateHeader(),
       body: JSON.stringify({
         name: userInfoData.name,
         about: userInfoData.about,
@@ -43,7 +52,7 @@ export class Api {
     //console.log(userInfoData);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this._validateHeader(),
       body: JSON.stringify({
         avatar: userInfoData.avatar,
       }),
@@ -54,7 +63,7 @@ export class Api {
   _addLikeCard(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: this._validateHeader(),
     }).then(this._returnStatus);
   }
 
@@ -62,7 +71,7 @@ export class Api {
   _removeLikeCard(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this._validateHeader(),
     }).then(this._returnStatus);
   }
 
@@ -74,7 +83,7 @@ export class Api {
   addCard(cardData) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: this._validateHeader(),
       body: JSON.stringify({
         name: cardData.name,
         link: cardData.link,
@@ -86,7 +95,7 @@ export class Api {
   removeCard(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this._validateHeader(),
     }).then(this._returnStatus);
   }
 }
