@@ -70,7 +70,7 @@ function App() {
         //попадаем сюда если один из промисов завершится ошибкой
         console.log(err);
       });
-  }, []);
+  }, [isLoggedIn]);
 
   function redirectToSignIn() {
     closeAllPopups();
