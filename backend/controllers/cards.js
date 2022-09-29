@@ -6,13 +6,13 @@ const ErrorForbidden = require('../errors/error-forbidden');
 const STATUS_OK = 200;
 
 module.exports.getCards = (req, res, next) => Card.find({})
-  .then((cardList) => res.status(STATUS_OK).send(cardList))
+  .then((cardList) => res.status(STATUS_OK).send(cardList.reverse()))
   .catch(next);
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((cardID) => res.status(STATUS_OK).send({ cardId: cardID }))
+    .then((cardID) => res.status(STATUS_OK).send(cardID))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new ErrorBadRequest('Переданы некорректные данные при создании карточки.'));
@@ -41,7 +41,7 @@ module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
   { new: true },
 )
   .orFail(() => new ErrorNotFound('Карточка с указанным _id не найдена.'))
-  .then((card) => res.status(STATUS_OK).send({ data: card }))
+  .then((card) => res.status(STATUS_OK).send(card))
   .catch(next);
 
 module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
@@ -50,5 +50,5 @@ module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
   { new: true },
 )
   .orFail(() => new ErrorNotFound('Карточка с указанным _id не найдена.'))
-  .then((card) => res.status(STATUS_OK).send({ data: card }))
+  .then((card) => res.status(STATUS_OK).send(card))
   .catch(next);

@@ -10,12 +10,12 @@ const { NODE_ENV, JWT_SECRET = 'dev-secret' } = process.env;
 const STATUS_OK = 200;
 
 module.exports.getUsers = (req, res, next) => User.find({})
-  .then((users) => res.status(STATUS_OK).send({ data: users }))
+  .then((users) => res.status(STATUS_OK).send( users ))
   .catch(next);
 
 module.exports.getUserByID = (req, res, next) => User.findById(req.params.userId)
   .orFail(() => next(new ErrorNotFound('Пользователь с указанным _id не найдена.')))
-  .then((user) => res.status(STATUS_OK).send({ data: user }))
+  .then((user) => res.status(STATUS_OK).send(user))
   .catch((err) => {
     if (err.name === 'CastError') {
       next(new ErrorBadRequest('Переданы некорректные для получения пользователя.'));
@@ -26,7 +26,7 @@ module.exports.getUserByID = (req, res, next) => User.findById(req.params.userId
 
 module.exports.getUser = (req, res, next) => User.findById(req.user._id)
   .orFail(() => next(new ErrorNotFound('Пользователь с указанным _id не найдена.')))
-  .then((user) => res.status(STATUS_OK).send({ data: user }))
+  .then((user) => res.status(STATUS_OK).send(user))
   .catch(next);
 
 module.exports.createUser = (req, res, next) => {
@@ -69,7 +69,7 @@ module.exports.updateUserInfoByID = (req, res, next) => User.findByIdAndUpdate(
     if (!user) {
       throw new ErrorNotFound('Пользователь по указанному _id не найден.');
     }
-    res.status(STATUS_OK).send({ user });
+    res.status(STATUS_OK).send(user);
   })
   .catch((err) => {
     if (err.name === 'ValidationError') {
@@ -89,7 +89,7 @@ module.exports.updateUserAvatarByID = (req, res, next) => User.findByIdAndUpdate
 )
   .orFail(() => next(new ErrorNotFound('Пользователь с указанным _id не найдена.')))
   .then((user) => {
-    res.status(STATUS_OK).send({ data: user });
+    res.status(STATUS_OK).send(user);
   })
   .catch((err) => {
     if (err.name === 'ValidationError') {
@@ -110,16 +110,11 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res
-        .cookie('jwt', token, {
-          maxAge: 3600000 * 24 * 7,
-          httpOnly: true,
-          sameSite: true,
-        })
         .status(STATUS_OK).send({ token });
     })
     .catch(next);
 };
 
-module.exports.signout = (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
-};
+// module.exports.signout = (req, res) => {
+//   res.clearCookie('jwt').send({ message: 'Выход' });
+// };

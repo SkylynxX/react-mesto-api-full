@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const routerUsers = require('./routes/users');
 const routerCards = require('./routes/cards');
@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 app.use(cors);
 
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(bodyParser.json()); // подключение готового парсера для обработки запросов
 app.use(requestLogger); // подключаем логгер запросов
 app.get('/crash-test', () => {
