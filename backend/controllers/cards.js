@@ -3,16 +3,14 @@ const ErrorBadRequest = require('../errors/error-bad-request');
 const ErrorNotFound = require('../errors/error-not-found');
 const ErrorForbidden = require('../errors/error-forbidden');
 
-const STATUS_OK = 200;
-
 module.exports.getCards = (req, res, next) => Card.find({})
-  .then((cardList) => res.status(STATUS_OK).send(cardList.reverse()))
+  .then((cardList) => res.send(cardList.reverse()))
   .catch(next);
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((cardID) => res.status(STATUS_OK).send(cardID))
+    .then((cardID) => res.send(cardID))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new ErrorBadRequest('Переданы некорректные данные при создании карточки.'));
@@ -29,7 +27,7 @@ module.exports.deleteCardByID = (req, res, next) => Card.findById(req.params.car
       throw new ErrorForbidden('Операция удаления карточки недоступна данному пользователю.');
     } else {
       Card.findByIdAndDelete(req.params.cardId)
-        .then(() => res.status(STATUS_OK).send({ cardId: card._id }))
+        .then(() => res.send({ cardId: card._id }))
         .catch(next);
     }
   })
@@ -41,7 +39,7 @@ module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
   { new: true },
 )
   .orFail(() => new ErrorNotFound('Карточка с указанным _id не найдена.'))
-  .then((card) => res.status(STATUS_OK).send(card))
+  .then((card) => res.send(card))
   .catch(next);
 
 module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
@@ -50,5 +48,5 @@ module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
   { new: true },
 )
   .orFail(() => new ErrorNotFound('Карточка с указанным _id не найдена.'))
-  .then((card) => res.status(STATUS_OK).send(card))
+  .then((card) => res.send(card))
   .catch(next);

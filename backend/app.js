@@ -1,19 +1,18 @@
+require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const routerIndex = require('./routes/index');
 const routerUsers = require('./routes/users');
 const routerCards = require('./routes/cards');
-const { login, createUser } = require('./controllers/users');
 const cors = require('./middlewares/cors');
-const { validateUser, validateLogin } = require('./middlewares/validation');
 const auth = require('./middlewares/auth');
 const errorJSON = require('./middlewares/error-json');
 const ErrorNotFound = require('./errors/error-not-found');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -31,8 +30,8 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-app.post('/signin', validateLogin, login);
-app.post('/signup', validateUser, createUser);
+
+app.use(routerIndex);
 
 app.use(auth);
 

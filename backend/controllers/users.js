@@ -1,21 +1,21 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-require('dotenv').config();
 const ErrorBadRequest = require('../errors/error-bad-request');
 const ErrorNotFound = require('../errors/error-not-found');
 const ErrorConflict = require('../errors/error-conflict');
 
 const { NODE_ENV, JWT_SECRET = 'dev-secret' } = process.env;
-const STATUS_OK = 200;
+// console.log(NODE_ENV === 'production');
+// console.log(JWT_SECRET);
 
 module.exports.getUsers = (req, res, next) => User.find({})
-  .then((users) => res.status(STATUS_OK).send( users ))
+  .then((users) => res.send(users))
   .catch(next);
 
 module.exports.getUserByID = (req, res, next) => User.findById(req.params.userId)
   .orFail(() => next(new ErrorNotFound('Пользователь с указанным _id не найдена.')))
-  .then((user) => res.status(STATUS_OK).send(user))
+  .then((user) => res.send(user))
   .catch((err) => {
     if (err.name === 'CastError') {
       next(new ErrorBadRequest('Переданы некорректные для получения пользователя.'));
@@ -26,7 +26,7 @@ module.exports.getUserByID = (req, res, next) => User.findById(req.params.userId
 
 module.exports.getUser = (req, res, next) => User.findById(req.user._id)
   .orFail(() => next(new ErrorNotFound('Пользователь с указанным _id не найдена.')))
-  .then((user) => res.status(STATUS_OK).send(user))
+  .then((user) => res.send(user))
   .catch(next);
 
 module.exports.createUser = (req, res, next) => {
@@ -37,7 +37,7 @@ module.exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then((user) => res.status(STATUS_OK).send({
+    .then((user) => res.send({
       name: user.name,
       about: user.about,
       avatar: user.avatar,
@@ -69,7 +69,7 @@ module.exports.updateUserInfoByID = (req, res, next) => User.findByIdAndUpdate(
     if (!user) {
       throw new ErrorNotFound('Пользователь по указанному _id не найден.');
     }
-    res.status(STATUS_OK).send(user);
+    res.send(user);
   })
   .catch((err) => {
     if (err.name === 'ValidationError') {
@@ -89,7 +89,7 @@ module.exports.updateUserAvatarByID = (req, res, next) => User.findByIdAndUpdate
 )
   .orFail(() => next(new ErrorNotFound('Пользователь с указанным _id не найдена.')))
   .then((user) => {
-    res.status(STATUS_OK).send(user);
+    res.send(user);
   })
   .catch((err) => {
     if (err.name === 'ValidationError') {
@@ -110,7 +110,7 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res
-        .status(STATUS_OK).send({ token });
+        .send({ token });
     })
     .catch(next);
 };
